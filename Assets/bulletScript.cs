@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class bulletScript : MonoBehaviour
 {
-    public float speed;
     public float angleSpeed;
     public float timer = 0.0f;
     public float timeAlive;

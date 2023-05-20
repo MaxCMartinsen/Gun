@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 395304369395478523}
   - component: {fileID: 395304369395478522}
   - component: {fileID: 395304369395478527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: tracerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb7456da74741b942b75b1e9ac6c0c82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  angleSpeed: 0
   timer: 0
   timeAlive: 5
+  rb: {fileID: 0}
+  gun: {fileID: 0}

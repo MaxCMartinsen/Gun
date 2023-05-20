@@ -1,33 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class laserScript : MonoBehaviour
 {
-    Ray laserRay;
-    Vector3 origin;
-    Vector3 direction;
-    public float maxDistance = 100f;
-    // Start is called before the first frame update
-    void Start()
-    {
+    public GameObject spherePrefab;
+    public GameObject objectToIgnore1;
+    public GameObject objectToIgnore2;
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        origin = transform.position;
-        direction = transform.up;
-        laserRay = new Ray(origin, direction);
+        Ray ray = new Ray(transform.position, transform.up);
         RaycastHit hit;
 
-        if (Physics.Raycast(laserRay, out hit, maxDistance))
+        if (objectToIgnore1 != null && objectToIgnore2 != null)
         {
-            float distance = Vector3.Distance(laserRay.origin, hit.point);
-            Debug.Log("Distance: " + distance);
+            int layerMask = 1 << objectToIgnore1.layer | 1 << objectToIgnore2.layer;
+
+            if (Physics.Raycast(ray, out hit, 100f, ~layerMask))
+            {
+                GameObject sphere = Instantiate(spherePrefab, hit.point, Quaternion.identity);
+
+                StartCoroutine(PauseCoroutine(sphere));
+            }
         }
+    }
 
+    IEnumerator PauseCoroutine(GameObject sphere)
+    {
+        yield return new WaitForSeconds(0.001f);
 
+        Destroy(sphere);
     }
 }
