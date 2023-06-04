@@ -6,6 +6,9 @@ public class GunScript : MonoBehaviour
     public GameObject bullet;
     public GameObject tracerBullet;
     private GameObject player;
+    public GameObject bulletHolePrefab;
+    public GameObject objectToIgnore1;
+    public GameObject objectToIgnore2;
     private bulletScript Bscript;
     public Text magText;
 
@@ -141,6 +144,20 @@ public class GunScript : MonoBehaviour
         GameObject activeBullet = Instantiate(bulletType, transform.position, transform.localRotation);
         Rigidbody rb = activeBullet.GetComponent<Rigidbody>();
         rb.AddForce(gameObject.transform.up * bulletSpeed, ForceMode.Impulse);
+        Ray ray = new Ray(transform.position, transform.up);
+        RaycastHit hit;
+
+        if (objectToIgnore1 != null && objectToIgnore2 != null)
+        {
+            int layerMask = 1 << objectToIgnore1.layer | 1 << objectToIgnore2.layer;
+
+            if (Physics.Raycast(ray, out hit, 100f, ~layerMask))
+            {
+                GameObject sphere = Instantiate(bulletHolePrefab, hit.point, hit.transform.rotation);
+            }
+        }
+
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
 }
