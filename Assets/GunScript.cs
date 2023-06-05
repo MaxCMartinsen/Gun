@@ -9,6 +9,7 @@ public class GunScript : MonoBehaviour
     public GameObject bulletHolePrefab;
     public GameObject objectToIgnore1;
     public GameObject objectToIgnore2;
+    public GameObject flashlight;
     private bulletScript Bscript;
     public Text magText;
 
@@ -67,6 +68,11 @@ public class GunScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             spread = !spread;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            flashlight.SetActive(!flashlight.active);
         }
 
         if (!spray)
@@ -154,6 +160,11 @@ public class GunScript : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100f, ~layerMask))
             {
                 GameObject sphere = Instantiate(bulletHolePrefab, hit.point, hit.transform.rotation);
+
+                if (hit.collider.name == "Grenade")
+                {
+                    Destroy(hit.collider.gameObject);
+                }
             }
         }
 
