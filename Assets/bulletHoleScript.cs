@@ -33,6 +33,6 @@ public class bulletHoleScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+     
     }
 }

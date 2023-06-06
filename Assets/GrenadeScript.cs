@@ -23,7 +23,7 @@ public class GrenadeScript : MonoBehaviour
         {
             SphereCollider.radius = 1f;
             SphereCollider.isTrigger = true;
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 16; i++)
             {
                 Debug.Log(i);
                 SpawnBullet();
@@ -47,7 +47,7 @@ public class GrenadeScript : MonoBehaviour
     {
         rotX += 1;
         Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        Quaternion rot = new Quaternion(transform.rotation.x, transform.rotation.y + (45 * rotX), transform.rotation.z, 0);
+        Quaternion rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y + (11.25f * rotX), transform.rotation.z);
         Instantiate(bullet, pos, rot);
     }
 }

@@ -10,10 +10,12 @@ public class GunScript : MonoBehaviour
     public GameObject objectToIgnore1;
     public GameObject objectToIgnore2;
     public GameObject flashlight;
+    public GameObject grenade;
     private bulletScript Bscript;
     public Text magText;
 
     private Quaternion rotation;
+    private Quaternion PlayerRotation;
     // Counter to make sure every 10 is tracer
     private float counterTracer = 0.0f;
     // Timers
@@ -45,7 +47,7 @@ public class GunScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        PlayerRotation = transform.rotation;
 
         magText.text = "Pistol Mag: " + pistolMag + "\nSMG Mag: " + sprayMag;
         // Reload
@@ -142,6 +144,14 @@ public class GunScript : MonoBehaviour
         else
         {
             transform.localPosition = new Vector3(0.371f, 0.133f, 0.65f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            Debug.Log("Thrown");
+            Instantiate(grenade, transform.position, PlayerRotation);
+            grenade.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed * Time.deltaTime);
+            Debug.Log(grenade.transform);
         }
     }
 
