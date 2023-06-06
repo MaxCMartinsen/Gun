@@ -33,6 +33,10 @@ public class GrenadeScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (timer < 2f)
+        {
+            transform.Translate(transform.forward * 3 * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

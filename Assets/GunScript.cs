@@ -11,9 +11,9 @@ public class GunScript : MonoBehaviour
     public GameObject objectToIgnore2;
     public GameObject flashlight;
     public GameObject grenade;
+    public GameObject casing;
     private bulletScript Bscript;
     public Text magText;
-
     private Quaternion rotation;
     private Quaternion PlayerRotation;
     // Counter to make sure every 10 is tracer
@@ -148,10 +148,7 @@ public class GunScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse2))
         {
-            Debug.Log("Thrown");
             Instantiate(grenade, transform.position, PlayerRotation);
-            grenade.GetComponent<Rigidbody>().AddForce(transform.forward * bulletSpeed * Time.deltaTime);
-            Debug.Log(grenade.transform);
         }
     }
 
@@ -177,7 +174,17 @@ public class GunScript : MonoBehaviour
                 }
             }
         }
-
+        float timer = 0f;
+        Vector3 xyz = new Vector3(transform.position.x  +0.1f, transform.position.y + 0.1f, transform.position.z);
+        GameObject bulletCasing = Instantiate(casing, xyz, Quaternion.Euler(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z));
+        if (timer < 0.1f)
+        {
+            bulletCasing.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 5, ForceMode.Impulse);
+        }
+        if (timer > 1f)
+        {
+            Destroy(bulletCasing);
+        }
         gameObject.GetComponent<AudioSource>().Play();
     }
 
