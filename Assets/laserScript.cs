@@ -9,9 +9,8 @@ public class laserScript : MonoBehaviour
 
     void Update()
     {
-        Ray ray = new Ray(transform.position, transform.up);
+        Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-
         if (objectToIgnore1 != null && objectToIgnore2 != null)
         {
             int layerMask = 1 << objectToIgnore1.layer | 1 << objectToIgnore2.layer;
@@ -28,7 +27,7 @@ public class laserScript : MonoBehaviour
     IEnumerator PauseCoroutine(GameObject sphere)
     {
         yield return new WaitForSeconds(0.001f);
-
+        Debug.Log("5");
         Destroy(sphere);
     }
 }

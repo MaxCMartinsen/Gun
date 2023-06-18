@@ -38,7 +38,7 @@ public class bulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name != "Pistol" && other.name != "Bullet(Clone)" && other.name != "tracerBullet(Clone)")
+        if (other.name != "Pistol" && other.name != "Bullet(Clone)" && other.name != "tracerBullet(Clone)" && other.name != "Glock18" && other.name != "Casing(Clone)" && other.name != "dot")
         {
             Debug.Log(other.name);
             Destroy(gameObject);

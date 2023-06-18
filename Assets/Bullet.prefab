@@ -115,7 +115,7 @@ MonoBehaviour:
   timer: 0
   timeAlive: 20
   rb: {fileID: 0}
-  gun: {fileID: 0}
+  gun: {fileID: 3780579752962205022, guid: 756af7bbdb6279c439b68e39137dc734, type: 3}
 --- !u!54 &6569856096364213056
 Rigidbody:
   m_ObjectHideFlags: 0

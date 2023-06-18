@@ -154,9 +154,10 @@ public class GunScript : MonoBehaviour
 
     void ShootBullet(GameObject bulletType)
     {
-        GameObject activeBullet = Instantiate(bulletType, transform.position, transform.localRotation);
+        Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        GameObject activeBullet = Instantiate(bulletType, pos, transform.localRotation);
         Rigidbody rb = activeBullet.GetComponent<Rigidbody>();
-        rb.AddForce(gameObject.transform.up * bulletSpeed, ForceMode.Impulse);
+        rb.AddForce(gameObject.transform.forward * bulletSpeed, ForceMode.Impulse);
         Ray ray = new Ray(transform.position, transform.up);
         RaycastHit hit;
 
@@ -167,7 +168,7 @@ public class GunScript : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100f, ~layerMask))
             {
                 GameObject sphere = Instantiate(bulletHolePrefab, hit.point, hit.transform.rotation);
-
+                Debug.Log("Bullethole");
                 if (hit.collider.name == "Grenade")
                 {
                     Destroy(hit.collider.gameObject);
@@ -179,7 +180,7 @@ public class GunScript : MonoBehaviour
         GameObject bulletCasing = Instantiate(casing, xyz, Quaternion.Euler(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z));
         if (timer < 0.1f)
         {
-            bulletCasing.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 5, ForceMode.Impulse);
+            bulletCasing.GetComponent<Rigidbody>().AddForce(gameObject.transform.right * 5, ForceMode.Impulse);
         }
         if (timer > 1f)
         {
