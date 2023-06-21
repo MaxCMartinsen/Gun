@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class GunScript : MonoBehaviour
 {
     public GameObject bullet;
+    public GameObject suppresorObject;
+    public Animator gunAnimator;
     public GameObject tracerBullet;
     private GameObject player;
     public GameObject bulletHolePrefab;
@@ -16,6 +18,8 @@ public class GunScript : MonoBehaviour
     public Text magText;
     private Quaternion rotation;
     private Quaternion PlayerRotation;
+
+    public bool suppresor;
     // Counter to make sure every 10 is tracer
     private float counterTracer = 0.0f;
     // Timers
@@ -41,7 +45,7 @@ public class GunScript : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         Bscript = bullet.GetComponent<bulletScript>();
-        
+        suppresorObject = GameObject.FindGameObjectWithTag("suppresor");
     }
 
     // Update is called once per frame
@@ -87,6 +91,7 @@ public class GunScript : MonoBehaviour
                     if (shootTimer > 0.3)
                     {
                         shootTimer = 0;
+                        GetComponent<Animator>().Play("g18_rig|g18_firing 0");
                         ShootBullet(bullet);
                         pistolMag--;
                     }
@@ -155,7 +160,8 @@ public class GunScript : MonoBehaviour
     void ShootBullet(GameObject bulletType)
     {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
-        GameObject activeBullet = Instantiate(bulletType, pos, transform.localRotation);
+        Quaternion rot = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y, transform.localRotation.y);
+        GameObject activeBullet = Instantiate(bulletType, pos, rot);
         Rigidbody rb = activeBullet.GetComponent<Rigidbody>();
         rb.AddForce(gameObject.transform.forward * bulletSpeed, ForceMode.Impulse);
         Ray ray = new Ray(transform.position, transform.up);
@@ -175,18 +181,24 @@ public class GunScript : MonoBehaviour
                 }
             }
         }
-        float timer = 0f;
-        Vector3 xyz = new Vector3(transform.position.x  +0.1f, transform.position.y + 0.1f, transform.position.z);
-        GameObject bulletCasing = Instantiate(casing, xyz, Quaternion.Euler(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z));
-        if (timer < 0.1f)
+        //float timer = 0f;
+        //Vector3 xyz = new Vector3(transform.position.x  +0.1f, transform.position.y + 0.1f, transform.position.z);
+        //GameObject bulletCasing = Instantiate(casing, xyz, Quaternion.Euler(transform.rotation.x, transform.rotation.y + 90, transform.rotation.z));
+        //if (timer < 0.1f)
+        //{
+        //    bulletCasing.GetComponent<Rigidbody>().AddForce(gameObject.transform.right * 5, ForceMode.Impulse);
+        //}
+        //if (timer > 1f)
+        //{
+        //    Destroy(bulletCasing);
+        //}
+        if (!suppresor)
         {
-            bulletCasing.GetComponent<Rigidbody>().AddForce(gameObject.transform.right * 5, ForceMode.Impulse);
+            gameObject.GetComponent<AudioSource>().Play();
+        } else
+        { 
+            suppresorObject.GetComponent<AudioSource>().Play();
         }
-        if (timer > 1f)
-        {
-            Destroy(bulletCasing);
-        }
-        gameObject.GetComponent<AudioSource>().Play();
     }
 
 }

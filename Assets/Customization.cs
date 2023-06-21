@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Customization : MonoBehaviour
 {
+    public GunScript gunScript;
+
     public GameObject glock18;
 
     public GameObject optionMenu;
@@ -99,6 +101,8 @@ public class Customization : MonoBehaviour
             flashlightButton.image.color = Color.red;
             OGFlahslight.SetActive(false);
         }
+
+        gunScript.suppresor = suppresor;
     }
 
     public void Suppresor()
@@ -128,6 +132,8 @@ public class Customization : MonoBehaviour
         startMenu.active = false;
         optionMenu.active = false;
         background.active = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void backPressed()

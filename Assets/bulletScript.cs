@@ -34,6 +34,7 @@ public class bulletScript : MonoBehaviour
         {
             transform.Translate(gameObject.transform.forward * angleSpeed * Time.deltaTime);
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
